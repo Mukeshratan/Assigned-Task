@@ -1,0 +1,53 @@
+Use a stack to track open brackets:
+
+Push any opening bracket onto the stack.
+
+When you see a closing bracket, check:
+
+If the stack is empty → invalid
+
+If the top of the stack matches the correct opening bracket → pop it
+
+Else → invalid
+
+If, at the end, the stack is empty, the string is valid.
+
+class Solution {
+    public static boolean isValid(String s) {
+
+        //Creates a new stack to store characters (brackets).
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : s.toCharArray()) {
+            // Push opening brackets
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack.push(ch);
+            }
+            // Handle closing brackets
+            else {
+                // Stack is empty or mismatched closing
+                if (stack.isEmpty()) return false;
+
+                //Removes the top element from the stack (which should be the matching opening bracket).
+                //Saves it in a variable called top.
+                char top = stack.pop();
+                if ((ch == ')' && top != '(') ||
+                    (ch == '}' && top != '{') ||
+                    (ch == ']' && top != '[')) {
+                    return false;
+                }
+            }
+        }
+
+        // If stack is empty, all brackets matched
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isValid("()"));        // true
+        System.out.println(isValid("()[]{}"));    // true
+        System.out.println(isValid("(]"));        // false
+        System.out.println(isValid("([])"));      // true
+        System.out.println(isValid("((("));       // false
+    }
+}
