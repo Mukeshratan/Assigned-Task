@@ -1,0 +1,41 @@
+public class MinDistanceBetweenWords {
+
+     //Returns an int: the minimum distance (in words) between word1 and word2.
+    public static int findMinDistance(String str, String word1, String word2) {
+
+//This splits the sentence (str) into individual words using " " (space) as the delimiter.
+        String[] words = str.split(" ");
+
+//initialize minDistance with the largest possible integer value.
+        int minDistance = Integer.MAX_VALUE;
+//two variables will store the latest positions of word1 and word2 as we loop through the array.
+        int index1 = -1;
+        int index2 = -1;
+
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].equals(word1)) {
+                index1 = i;
+            } else if (words[i].equals(word2)) {
+                index2 = i;
+            }
+
+            if (index1 != -1 && index2 != -1) {
+
+//calculate the absolute difference between the two indices.
+                int distance = Math.abs(index1 - index2);
+                minDistance = Math.min(minDistance, distance);
+            }
+        }
+//If minDistance was never updated, it means one or both words were not found → return -1.
+        return minDistance == Integer.MAX_VALUE ? -1 : minDistance;
+    }
+
+    public static void main(String[] args) {
+        String str = "the quick the brown quick brown the frog";
+        String word1 = "quick";
+        String word2 = "frog";
+
+        int result = findMinDistance(str, word1, word2);
+        System.out.println("Minimum distance: " + result); // Output: 2
+    }
+}
